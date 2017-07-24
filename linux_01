@@ -1,1 +1,39 @@
 
+1.linux 特点
+  a.开源、免费
+  b.支持多线程，多用户
+  c.安全性好
+  d.对内存，文件管理优越  linux最小只需要4m内存--嵌入式开发
+  
+ 2.startx    ：进入图形显示界面
+   shutdown -h now 立刻进行关机
+   shutdown -r now 重新启动计算机
+   reboot          重新启动计算机
+   su -            切换系统管理员
+   logout          断开客户端连接
+   ls              当前目录的所有文件
+   ls -l  等于 ll  当前目录详细列表
+   
+ 3 . vi 编辑器
+   使用vi编辑器编写一个hello。java  步骤
+   a> vi  Hello.java
+   b> 输入 i,进入到插入模式
+   c》 输入esc ，进入命令模式
+   d》输入冒号，光标进入最底层 wq退出保存   q！退出不保存
+   e》编辑java  输入 javac Hello。java
+   f》运行java  输入 java Hello
+   
+   
+   使用vi写一个C或c++程序
+   a》编辑c
+4. linux 中常用的目录
+   root：主要存放root这个用户的相关文件
+   home：存放普通用户的相关文件目录
+   bin： 存放普通命令的目录，具有一定权限才可以使用的命令
+   sbin：
+   mnt：
+   etc：
+   var：
+   boot：
+
+
