@@ -1,0 +1,135 @@
+package com.cncp.collection;
+
+public class CircleNode {
+	/**
+	 * 
+	 * @author admin
+	 *
+	 */
+  class Node{
+	private  Node pre;
+	private  Object value;
+	private  Node next;
+	public Node getPre() {
+		return pre;
+	}
+	public void setPre(Node pre) {
+		this.pre = pre;
+	}
+	public Object getValue() {
+		return value;
+	}
+	public void setValue(Object value) {
+		this.value = value;
+	}
+	public Node getNext() {
+		return next;
+	}
+	public void setNext(Node next) {
+		this.next = next;
+	}
+  }
+  
+  private int size;
+  
+  private Node first;
+  
+  private Node last;
+  
+  public void add(Object obj){
+	  if(first == null){
+		  Node n1 = new Node();
+		  n1.value = obj;
+		  first = n1;
+		  last = n1;
+		  first.pre = last;
+		  first.next=last;
+		  last.pre=first;
+		  last.next = first;
+	  }else{
+		  Node n2 =new Node();
+		  n2.value = obj;
+		  n2.pre = last;
+		  n2.next = first;
+		  last.next=n2;
+		  last = n2;
+		  first.pre = last;
+	  }
+	  size++;
+  }
+  
+  
+  public void remove(Node d , Object o){
+	  if(d.value.equals(o)){
+		  Node pre = d.pre;
+		  Node next = d.next;
+		  pre.next = next;
+		  next.pre = pre;
+		  size--;
+		  if(d == first){
+			  first = pre;
+		  }
+		  if(d == last){
+			  last = next;
+		  }
+	  }else{
+		  remove(d.next,o);
+	  }
+  }
+
+  
+  public void getLast(int n ){
+	  Node temp  = this.first;
+	  Node _first = null;
+	  while(this.size > 1){
+		  for(int i=1; i<n;i++){
+			temp = temp.next;  
+		  }
+		  _first = temp.pre;
+		  this.remove(this.first,temp.value);
+		  temp = _first;
+	  }
+	  System.out.println(this.first.value);
+  }
+  
+  
+public int getSize() {
+	return size;
+}
+
+public void setSize(int size) {
+	this.size = size;
+}
+
+public Node getFirst() {
+	return first;
+}
+
+public void setFirst(Node first) {
+	this.first = first;
+}
+
+public Node getLast() {
+	return last;
+}
+
+public void setLast(Node last) {
+	this.last = last;
+}
+  
+	public static void main(String[] args) {
+		CircleNode c = new CircleNode();
+		
+		for(int i=1;i<=5;i++){
+			c.add(""+i);
+		}
+		
+		c.getLast(3);  
+		
+		
+	}
+}
+/**
+   运行结果： 4 ，最后剩下的人是第4名小朋友
+*/
+
