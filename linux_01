@@ -38,6 +38,31 @@
    passwd  默认是给当前用户设置密码，如果给刚创建的用户设置密码 passwd lhz 回车，输入密码即可
    userdel lhz 删除用户，但是会保留用户的文件夹
    userdel -r lhz 删除用户，同时删除用户的主文件夹
+   
+   如何在linux中添加组
+   groupadd 组名  如：groupadd policeman 添加一个组名为policeman的组
+   查看linux中所有组的信息    cat /ect/group   如：pliceman:x:1004 x为加密信息，1004是组id号
+   如何创建用户并同时指定将用户放入某个组中呢？
+   useradd -g 组名  用户名  如： useradd  -g policeman lhz
+   查看linux中所有用户信息   cat /etc/passwd
+   ashuai:x:1005:1005::/home/ashuai:/bin/bash  x表示密码加密，第一个1005用户ID，第二个1005组id，注释为空，用户主目录/home/ashuai,bin/bash
+   表示该用户的shell解析器目录
+   
+   用该用户登录创建文件
+   -rw-r--r--. 1 panpan policeman 6 Jul 27 14:13 mytest1.txt   
+    1 表示如果是文件，就是1 ，如果是文件夹就是文件夹下文件的个数， panpan是文件所有者， policeman 是用户的所在组，后面是时间
+    -|rw-|r--|r--  重点，第一部分表示文件类型，如果是普通文件就是"-"，文件夹为d,第二部分表示文件的所有者对该文件的权限，权限有三种：r（读） 数字4，
+    w（写） 数字2,x (可执行) 数字1，图上表示文件所有者对文件有读写的权限，第三部分表示文件所在组对该文件的权限，第四部分表示其他组的用户对文件
+    的权限（其他组就是除创建者和创建者所在组之外的人）
+    
+    如何修改文件的访问权限？
+    
+   
+   
+   
+   
+   
+   
    ------------------
    /etc/inittab 中 id:3:initdefault 修改id的值可以让系统出现不同的情况 
    0：关机
