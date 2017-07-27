@@ -20,6 +20,7 @@
    touch           创建新的空文件
    cp              复制文件
    cp -r dir1 dir2 递归复制命令（复制子目录信息）
+   grep            查询，如在文件中查询a  grep  a aa.txt
    
    mv      移动文件和改文件名
    rm      删除文件和目录
@@ -68,11 +69,24 @@
     usermod -g 组名  用户名   usermod -g policeman ashuai 将ashuai放入policeman组
     usermod -d 目录名  用户名  改变用户登录的初始目录
     
+    chown along mytest1.txt    chown 用户名 文件名， 改变文件所有者，只是改变文件所有者，不会改变文件所在组，和文件的权限
+    groupdel 组名   删除某个组
     
-   
-   
-   
-   
+    如何查询某个组下的某个用户：
+    cat /etc/passwd | grep -n heimayun
+    
+    如何查询policeman组下的所有用户：
+    1：获取policeman组的组id
+    2：查找组下的用户
+    
+    [root@localhost panpan]# cat /etc/group | grep policeman
+    policeman:x:1004:
+    [root@localhost panpan]# cat /etc/passwd |grep 1004
+    panpan:x:1004:1004::/home/panpan:/bin/bash
+    ashuai:x:1005:1004::/home/ashuai:/bin/bash
+    along:x:1006:1004::/home/along:/bin/bash
+    
+
    
    ------------------
    /etc/inittab 中 id:3:initdefault 修改id的值可以让系统出现不同的情况 
