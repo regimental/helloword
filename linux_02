@@ -1,4 +1,6 @@
 一：linux 文件安装
+   镜像文件的制作，下载镜像制作工具如WINISO,将要制作的文件拖入，生成iso文件，挂载到linux上，mount /mnt/cdrom/  ,卸载 umount /mnt/cdrom/
+   
   .bin的文件 ，直接进入文件所在目录，./xxx.bin 回车，如果需要权限，chmod 777 xxxx.bin ,后执行安装命令
   .tar.gz 的文件， 直接进入文件所在目录  tar -zxvf xxxx.tar.gz  回车
   
