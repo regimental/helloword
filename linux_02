@@ -1,1 +1,4 @@
-1
+一：linux 文件安装
+  .bin的文件 ，直接进入文件所在目录，./xxx.bin 回车，如果需要权限，chmod 777 xxxx.bin ,后执行安装命令
+  .tar.gz 的文件， 直接进入文件所在目录  tar -zxvf xxxx.tar.gz  回车
+  
