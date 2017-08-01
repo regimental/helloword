@@ -11,4 +11,43 @@
    fdisk -l
    /dev/sda1   磁盘分两种 sd 和hd 其中sd的速度较hd快，造价高，常用于企业和服务器 a，b，c，d表示磁盘的块数，每个磁盘块后面的1,2,3.。表示磁盘分区
    /dev/sda2    例表示:1块sd磁盘有1,2两个主分区，逻辑分区的数值从5开始
+   查看某个目录在哪个分区下
+   df  /home/java  (全路径)
+   /dev/mapper/centos-root  39265556 6572576  32692980  17% /
+   df -h
+   查看磁盘的使用情况
+   /dev/mapper/centos-root   38G  6.3G   32G  17% /
+   devtmpfs                 902M     0  902M   0% /dev
+   tmpfs                    917M   84K  917M   1% /dev/shm
+   tmpfs                    917M  9.0M  908M   1% /run
+   tmpfs                    917M     0  917M   0% /sys/fs/cgroup
+   /dev/sda1                497M  158M  340M  32% /boot
+   tmpfs                    184M   16K  184M   1% /run/user/42
+   tmpfs                    184M     0  184M   0% /run/user/1000
+
    
+   挂载命令：
+      mount /dev/sda1  /test/  将磁盘挂载到test文件夹
+      umount /test/   卸载test文件
+      
+      
+三：linux安装
+    1，虚拟机安装
+    2，独立安装，
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
