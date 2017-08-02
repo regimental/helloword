@@ -38,6 +38,15 @@
 四：文件访问
     window服务器之间可以通过网上邻居共享文件，window和linux之间文件共享可以通过samba服务器，在linux服务器上安装samba服务，轻松实现文件共享。
     
+五：shell
+   类似于windows中的bat，批处理命令，linux中shell 分sh csh ksh
+   查看目前linux使用的是那种shell，命令：env  该命令可以显示当前操作系统的环境变量
+   修改shell的使用，如操作系统是bsh ，现在用csh
+   chsh -s /bin/
+   
+   shell的命令补全功能，mk 按两下tab键 将列出命令的列表
+ 
+    
     
     
     
