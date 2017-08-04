@@ -1,0 +1,155 @@
+一：开发中怎么进行模块的划分：
+        功能模块：select，model...
+        页面区域：footer ，header ，slider...
+        
+
+二：组件之间的引用
+        如果一个组件页面引用另外一个组件，
+        1.需要导入该组件， import xxxx from 'xxxx.vue'
+        2.且引用页面需要注册组件，components:[xxx],components 和data ，methods 等同级
+        3.在页面中将驼峰命名规则转换成标签名称
+        4.如果父组件向子组件传值，需要在子组件中注册props 接受，
+        5，子组件向父组件传值，需要借助事件来实现，子组件调用$emit,触发某方法，父组件用$.on 监听某事件从而达到传值的效果，
+        需注意v-on后的变量名需要和 $emit中指定的变量名称一致
+        使用$dispatch()派发事件，事件沿着父链冒泡；目前vue2.0版本已摒弃
+　　    使用$broadcast()广播事件，事件向下传导给所有的后代，目前vue2.0版本已摒弃
+      
+----------------------父页面--------------------------------      
+<template>
+  <div id="app">
+   <h1 v-html="title"></h1>
+    <input type="text" v-model="newItem" v-on:keyup.enter="addNew">
+    <ul>
+      <li v-for="item in items" v-bind:class="{finished:item.finish}" v-on:click="toggleclick(item)">{{item.lable}}</li>
+    </ul>
+    <h1>{{childMsg}}</h1>
+    <h2>{{childdispathData}}</h2>
+    <CompoentA :msgFromFather="items" v-on:hellFather="getChildMsg"></CompoentA>
+  </div>
+</template>
+
+<script>
+  import  Store from './store'
+  import  CompoentA from './components/CompoentA.vue'
+export default {
+  data:function(){
+     return{
+       title:"<span style='color:red'>ssss</span>this is a todo list1",
+       items:Store.fetch(),
+       liclass:"thisisclass",
+       class2:"ddd",
+       newItem:'',
+       childMsg:'',
+       childdispathData:''
+     }
+  },
+  components:{CompoentA},
+  methods:{
+    toggleclick:function (item) {
+       item.finish=!item.finish;
+    },
+    addNew:function () {
+      this.items.push({
+        lable:this.newItem,
+        finish:false
+      });
+      this.newItem=''; //clean
+      //向子节点传递数据,vue2.0摒弃
+      //this.$broadcast('tomychilds','ssss');
+    },
+    getChildMsg:function (data) {
+       console.log("data="+data)
+       this.childMsg = data;
+    }
+  },
+  watch:{
+     //监听items的变化，每次变化增加或减少都触发监听方法
+      items:{
+        handler:function (items) {
+          console.log(items)
+          Store.save(this.items)
+        },
+        deep:true //设置成true是监听的对象中的某个属性的变化也会被检测到
+      }
+  },
+
+  event:{
+    //获取子节点的传值,vue2
+    hellobaba:function (data2) {
+      console.log(data2);
+      this.childdispathData = data2;
+    }
+  }
+}
+</script>
+
+<style>
+  .finished{
+    text-decoration: underline;
+  }
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
+</style>
+
+
+
+-----------------------子页面------------------------
+<template>
+  <div class="hello">
+    <h1>{{ msg }}</h1>
+    <h2>{{msgFromFather}}</h2>
+    <button v-on:click="clickme">click</button>
+
+
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'hello',
+  data:function(){
+    return {
+      msg: 'hello from Component A',
+      msg2:"helloFather ,i am from componentA"
+    }
+  },
+  props:['msgFromFather'],
+  methods:{
+    clickme:function () {
+      console.log(this.msgFromFather);
+      this.$emit('hellFather',this.msg2);
+      //this.$dispatch('hellobaba','this is test data');
+    }
+  }
+}
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+h1, h2 {
+  font-weight: normal;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  display: inline-block;
+  margin: 0 10px;
+}
+
+a {
+  color: #42b983;
+}
+</style>
+
+
+
