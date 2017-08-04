@@ -1,0 +1,12 @@
+一：vue入门
+vue最重要的结构分为：
+               data
+               methods
+               watch
+               其中data存放页面上的一些变量值，methods用户页面上定义的方法，watch用于监听data数据中某个值的变化，触发某个方法。
+               
+ vue常用的指令有：
+             v-text ,v-html , v-for ,v-if , v-model, v-bind 等
+             
+             
+ export default {}     类似于new vue(){}
