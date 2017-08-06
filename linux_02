@@ -52,7 +52,13 @@
    
 六：tcp/ip 是一组协议的集合，（包含地址解析协议，udp...）,人与人的通信用语言，计算机之间的通信用的最多的就是tcp/ip协议，理论分分七层架构，实际中
 分四层结构
+    每个internet上的主机和路由都有一个ip地址，它包括网络号和主机号，所有ip地址都是32位的，分为a，b，c，d，e 五种
+    tractrt www.baidu.com 路由追踪命令，查了到达目的地经过的路由ip
     
+    linux下查看ip地址命令：ifconfig
+    linux 网络配置：
+    1，已root身份登录，运行setup命令 进入text mode setup utiliy对网络进行配置，这里可进行ip，子网掩码，默认网关，dns的配置
+    2，这时网卡的配置没有生效，运行 /etc/rc.d/init.d/network restart命令刚才的设置才生效
     
     
     
