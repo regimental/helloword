@@ -1,0 +1,4 @@
+1.spring 经历了从1.x到4.x的发展，1.x推荐xml  ,2.x 支持注解，3.x 提出没有xml，4.x推荐无xml配置的方式
+  spring 的java配置方式是通过 @configuration ，@bean 注解实现的，@configuration 作用于类上，相当于xml配置
+  @bean 作用于方法上相当于xml中配置的bean
+  
