@@ -18,3 +18,12 @@ P:很清楚吧，tor占用了你的端口。
  
 4.结束该进程
 C:\>taskkill /f /t /im tor.exe
+
+
+--------------------------------------------------------------------------------------------------------
+git config --global http.proxy proxy3.bj.petrochina:8080
+git config --global https.proxy proxy3.bj.petrochina:8080
+
+去掉代理
+git config --system  --unset http.proxy
+git config --system  --unset https.proxy
