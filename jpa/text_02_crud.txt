@@ -1,0 +1,101 @@
+1,关于使用jpa的增删改查，请看测试用例
+package jpa;
+import java.util.Date;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
+import org.junit.Test;
+
+import jpa.entity.Person;
+
+public class PersonTest {
+
+    @Test
+    public void test1() {
+        EntityManagerFactory enMgrFac =  Persistence
+                .createEntityManagerFactory("jpaPU"); 
+        //类似hibernate的sessonFactory---session ----begin事务
+        //类似于session
+        EntityManager entityMgr = enMgrFac.createEntityManager();
+        //开启事务
+        entityMgr.getTransaction().begin();
+        Person p =new Person();
+        p.setName("test");
+        p.setBirthday(new Date());
+        entityMgr.persist(p);
+        entityMgr.getTransaction().commit();
+        entityMgr.close();
+        enMgrFac.close();
+    }
+    
+    
+    
+    //查询方法一，类似于hibernate中的get方法，直接从数据库中查
+    @Test
+    public void testgetPerson1(){
+        EntityManagerFactory fac = Persistence.createEntityManagerFactory("jpaPU");
+        EntityManager em = fac.createEntityManager();
+        Person p = em.find(Person.class, 1); //需要表示
+        System.out.println(p.getName());       
+    }
+    
+    //查询方法一，类似于hibernate中的load方法，生成代理对象，只有真正访问属性的时候，查询数据库
+    @Test
+    public void testgetPerson2(){
+        EntityManagerFactory fac = Persistence.createEntityManagerFactory("jpaPU");
+        EntityManager em = fac.createEntityManager();
+        Person p = em.getReference(Person.class, 1);
+        System.out.println(p.getName());       
+    }
+    
+    
+    //修改方法，需要打开事务类
+    //数据库中是实体有new，托管，游离，删除状态，下面这种方法首先是在事务中，其次是托管状态，这样在事务提交的时候
+    //jpa有个批处理命令，更新语句
+    @Test
+    public void testupdatePerson1(){
+        EntityManagerFactory fac = Persistence.createEntityManagerFactory("jpaPU");
+        EntityManager em = fac.createEntityManager();
+        em.getTransaction().begin();
+        Person p = em.find(Person.class, 1); //此时为托管状态
+        p.setName("lisi");
+        em.getTransaction().commit();
+    }
+    
+    
+     //修改方法，需要打开事务类
+    //数据库中是实体有new，托管，游离，删除状态，下面这种方法首先是在事务中，其次是托管状态，这样在事务提交的时候
+    //jpa有个批处理命令，更新语句
+    @Test
+    public void testupdatePerson2(){
+        EntityManagerFactory fac = Persistence.createEntityManagerFactory("jpaPU");
+        EntityManager em = fac.createEntityManager();
+        em.getTransaction().begin();
+        Person p = em.find(Person.class, 1); //此时为托管状态
+        em.clear();  //将所有托管状态的数据变成游离状态
+        p.setName("lisi1");
+        //变成游离态以后，必须执行merge方法，才能更新数据,merge就是将游离状态的数据同步更新数据库
+        em.merge(p);
+        em.getTransaction().commit();
+    }
+    
+    
+    
+    //删除方法，需要打开事务类,否则无法删除哦
+    @Test
+    public void testdelPerson(){
+        EntityManagerFactory fac = Persistence.createEntityManagerFactory("jpaPU");
+        EntityManager em = fac.createEntityManager();
+        em.getTransaction().begin();
+        Person p = em.find(Person.class, 1); //此时为托管状态
+        em.remove(p);
+        em.getTransaction().commit();
+        fac.close();
+    }
+    
+    
+    
+    
+    
+}
