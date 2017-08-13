@@ -21,9 +21,25 @@
              <property name="hibernate.hbm2ddl.auto" value="update" />    
           </properties>
       3:创建相关实体bean
-      4：测试用例，创建表并保存
+         @Id
+          @GeneratedValue(strategy=GenerationType.AUTO)
+         private Integer id;
+         private String name;
+
+         @Temporal(TemporalType.TIMESTAMP)
+         private Date birthday;  //日期类型
+
+         @Enumerated(EnumType.STRING)
+         @Column(length=5,nullable=false)
+         private Gender gender = Gender.MAN;//枚举类型
+         @Lob
+         @Basic(fetch=FetchType.LAZY)
+         private Byte[] file; //大数据类型，延迟加载
+         @Transient
+         private String imgpath; //忽略字段
+  4：测试用例，创建表并保存
        @Test
-    public void test1() {
+       public void test1() {
         EntityManagerFactory enMgrFac =  Persistence
                 .createEntityManagerFactory("jpaPU"); 
         //类似hibernate的sessonFactory---session ----begin事务
