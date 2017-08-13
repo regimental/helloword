@@ -1,0 +1,40 @@
+ 1:环境搭建
+  创建maven项目，引入相关依赖，网上有
+ 2：在src/main/resources 下创建目录MATA_INF,添加数据库相关配置
+  <!--必须要有name属性，不能为空 -->
+     <persistence-unit name="jpaPU" transaction-type="RESOURCE_LOCAL">          
+          <!--厂商的特定属性 -->
+          <properties>
+             <!--配置Hibernate方言 -->
+             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect" />
+             <!--配置数据库驱动 -->
+             <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" />
+             <!--配置数据库用户名 -->
+             <property name="hibernate.connection.username" value="root" />
+             <!--配置数据库密码 -->
+             <property name="hibernate.connection.password" value="root" />
+             <!--配置数据库url -->
+             <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/jpatest?useUnicode=true&amp;characterEncoding=UTF-8" />
+             <!--设置外连接抓取树的最大深度 -->
+             <property name="hibernate.max_fetch_depth" value="3" />
+             <!--自动输出schema创建DDL语句 -->
+             <property name="hibernate.hbm2ddl.auto" value="update" />    
+          </properties>
+      3:创建相关实体bean
+      4：测试用例，创建表并保存
+       @Test
+    public void test1() {
+        EntityManagerFactory enMgrFac =  Persistence
+                .createEntityManagerFactory("jpaPU"); 
+        //类似hibernate的sessonFactory---session ----begin事务
+        //类似于session
+        EntityManager entityMgr = enMgrFac.createEntityManager();
+        //开启事务
+        entityMgr.getTransaction().begin();
+        Person p =new Person();
+        p.setName("test");
+        entityMgr.persist(p);
+        entityMgr.getTransaction().commit();
+        entityMgr.close();
+        enMgrFac.close();
+    }
