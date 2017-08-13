@@ -24,3 +24,29 @@ OneToMany 标签标示一对多的关系，其中的cascade属性有4个值
     
     注意上面的级联是只有执行特定的方法时才触发，如 PERSIST 执行em.persist()时触发，Query query="insert into xxx" 是不会触发的。同理还有其他的
     几个方法
+
+二：测试用例
+   @Test
+    public void test1() {
+        EntityManagerFactory enMgrFac =  Persistence
+                .createEntityManagerFactory("jpaPU"); 
+        //类似hibernate的sessonFactory---session ----begin事务
+        //类似于session
+        EntityManager entityMgr = enMgrFac.createEntityManager();
+        //开启事务
+        entityMgr.getTransaction().begin();
+         Order o = new Order();
+         o.setOrderId("xsdse");
+         o.setTotalPrice((float) 1.0);
+         OrderDetail d = new OrderDetail();
+         d.setPrice((float) 1.0);
+         d.setProcName("test");
+         d.setOrder(o);
+         Set<OrderDetail> lists = new HashSet<OrderDetail>();
+         lists.add(d);
+         o.setOrderDetails(lists);
+         entityMgr.persist(o);
+         entityMgr.getTransaction().commit();
+         entityMgr.close();
+         enMgrFac.close();
+    }
