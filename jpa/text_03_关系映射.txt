@@ -1,0 +1,26 @@
+一对多，多对一
+1---n jpa规定，多的一方为关系维护段，关系维护段的概念是指 关系维护端负责外键关系的更新，如果是多对多指关系维护端负责更新中间表数据的更新
+关系被维护端是没有权限更新外键字段的，
+OneToMany 标签标示一对多的关系，其中的cascade属性有4个值
+    @OneToMany(cascade={CascadeType.PERSIST, //标示insert 订单的时候， 也insert orderdetail
+             CascadeType.MERGE,   //假如订单处于游离态，在保存订单的时候，也保存处于游离态的明细信息
+             CascadeType.REFRESH, //假如某个时刻取的订单数据总金额100，有人更新了50，调用refersh（）方法，查询订单信息，同时查询最新的明细信息
+             CascadeType.REMOVE},//删除订单的时候级联删除订单下面的明细信息
+             ,fetch=FetchType.LAZY,//默认为延迟加载(xxxToMany，这种得默认都是延迟加载)
+              mappedBy="order"  //因为订单表中，多的一方维护关系，所以order为关系的被维护段，添加mapper by ，只要是添加了mapper by 的字段
+              都是关系的被维护段，其中mapperby后面的属性值是指orderDetail（关系维护段）的属性值，表示在关系的维护段中有哪个属性来维护该字段
+             ) 
+    private Set<OrderDetail> orderDetails;
+    
+    
+    //参考orderdtail实体  
+    //默认更新保存游离态的实体明显时，保存订单信息，刷新时也刷新主信息，optional有true和false ，true表示这个属性可以没有，也就是可以存在只有
+    明细信息没有主信息这样的数据，这显然不对，所以添加false
+    @ManyToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH},optional=false)
+    private Order order;
+      
+    @ManyToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH},optional=false)
+    private Order order;
+    
+    注意上面的级联是只有执行特定的方法时才触发，如 PERSIST 执行em.persist()时触发，Query query="insert into xxx" 是不会触发的。同理还有其他的
+    几个方法
