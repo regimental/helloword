@@ -94,8 +94,49 @@ public class PersonTest {
         fac.close();
     }
     
+    ----------------jpa 语句的jhql-----------------------
+    
+    //查询方法，不用开启事务
+    @Test
+    public void testQuery(){
+        EntityManagerFactory fac = Persistence.createEntityManagerFactory("jpaPU");
+        EntityManager em = fac.createEntityManager();
+        Query query = em.createQuery("select o from Person o where o.id=?1");
+        query.setParameter(1, 2);
+        Person p = (Person) query.getSingleResult();
+        System.out.println(p.getBirthday());
+        em.close();
+        fac.close();
+    }
+    
+    //更新方法，需要开启事务
+    @Test
+    public void testUpdateQuery(){
+        EntityManagerFactory fac = Persistence.createEntityManagerFactory("jpaPU");
+        EntityManager em = fac.createEntityManager();
+        em.getTransaction().begin();
+        Query query = em.createQuery("update Person p set p.name = :name where p.id=:id");
+        query.setParameter("name", "zhangsan");
+        query.setParameter("id", 2);
+        query.executeUpdate();
+        em.getTransaction().commit();
+        em.close();
+        fac.close();
+    }
     
     
-    
+  //删除方法，需要开启事务
+    @Test
+    public void testDelQuery(){
+        EntityManagerFactory fac = Persistence.createEntityManagerFactory("jpaPU");
+        EntityManager em = fac.createEntityManager();
+        em.getTransaction().begin();
+        Query query = em.createQuery("delete Person p where p.id=?1");
+        query.setParameter(1, 2);
+        query.executeUpdate();
+        em.getTransaction().commit();
+        em.close();
+        fac.close();
+    }
     
 }
