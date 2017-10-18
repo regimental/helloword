@@ -59,6 +59,8 @@
     linux 网络配置：
     1，已root身份登录，运行setup命令 进入text mode setup utiliy对网络进行配置，这里可进行ip，子网掩码，默认网关，dns的配置
     2，这时网卡的配置没有生效，运行 /etc/rc.d/init.d/network restart命令刚才的设置才生效
+    3, ifconfig eth0 192.168.1.1  这个方法可以临时修改ip，重启后恢复
+    4，进入/etc/sysconfig/network-scripts/ipcfg-eth0 ,修改此文件上面的1和2本质也是修改它，修改后执行2重启生效
     
     
     
