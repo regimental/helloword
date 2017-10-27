@@ -1,0 +1,43 @@
+地址：10.29.32.20   pmswx
+1,grand 下 cloud-cpp-root下的verification下的check，不报错后，在project下的cpp-root ------buid-----reports
+2，合并到sit分支
+3，执行clean命令，配置参数-Dprofile=prod -Dspring.profile.active=sit
+  执行build，打包后生成的文件project---build--libs
+4，登录工具，右键打开sftp选项，ls查看目录，切换到cpp下，lpwd 如果不是lib文件夹，可以使用sftp> lcd E:\beijingProject\idea\cloud-cpp-root\cloud-cpp\build\libs切换
+		sftp> binary
+
+		sftp> put cloud-cpp-1.0.1-SNAPSHOT.jar
+		Uploading cloud-cpp-1.0.1-SNAPSHOT.jar to /home/pmswx/app/cpp/cloud-cpp-1.0.1-SNAPSHOT.jar
+		  100% 64269KB    212KB/s 00:05:03     
+		E:/beijingProject/idea/cloud-cpp-root/cloud-cpp/build/libs/cloud-cpp-1.0.1-SNAPSHOT.jar: 65811459 bytes transferred in 303 seconds (212 KB/s)
+
+
+5，$ ps -ef | grep java  查看cloud-cpp端口
+
+6，$ kill -15 20765
+
+
+ //关闭项目
+[pmswx@PMSEXTTW1 cpp]$ kill -15 20765
+//查看启动的项目
+[pmswx@PMSEXTTW1 cpp]$ ps -ef | grep java
+//查看日志
+[pmswx@PMSEXTTW1 cpp]$ tail -f out
+//启动项目
+[pmswx@PMSEXTTW1 cpp]$ nohup ../../jdk1.8.0.131/bin/java -Dspring.profiles.active=sit -jar cloud-cpp-1.0.1-SNAPSHOT.jar 1>out 2>&1 &
+
+//切换到 项目路径
+sftp> cd app/cpp  
+//设置上传为二进制
+sftp> set binary
+//查看本地路径
+sftp> lpwd
+D:/SecureCRSecureFX_x64/App/VanDyke Clients
+//查看本地文件中的数据  将jar放到这个文件
+
+//进行上传
+sftp> put cloud-cpp-1.0.1-SNAPSHOT.jar
+
+
+---------------buldsit  参数
+-Dprofile=prod -Dspring.profile.active=sit
