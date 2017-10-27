@@ -34,3 +34,7 @@
 ，repo中
    @EntityGraph(value = "Project.basicWithMember", type = EntityGraph.EntityGraphType.LOAD)
    Project findProjectWithMembersById(Long id);
+
+4===========================================================================
+idea 快捷键，查看某个接口的具体实现  ctrl+h
+            查看某个方法的参数：  ctrl+q
