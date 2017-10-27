@@ -1,0 +1,36 @@
+1，jpa 实体关联后按某个属性排序，Order by标签，如：@OrderBy("createdDate desc"),
+2，查询某实体中指定属性，先定义接口； /**
+             * @author gexada
+             */
+            public interface ExecutionOnlyStageProj {
+
+                Long getId();
+
+                ExecutionStage getStage();
+            }
+            
+   在repo中，
+   /**
+     * @author gao jun
+     */
+    public interface ExecutionRepo
+            extends JpaRepository<Execution, Long>,
+            JpaSpecificationExecutor<Execution>, ExecutionRepoCustom {
+
+        ExecutionOnlyStageProj findOnlyStageById(Long id);
+    }
+
+
+3，如果某些属性上定义了懒加载，但查询时想一次查出，可以定义@NamedEntityGraph 注解，
+                  */
+            @Entity
+            @NamedEntityGraph(name = "Project.basicWithMember",
+                    attributeNodes = {@NamedAttributeNode("members"),@NamedAttributeNode("bigProject")})
+            public class Project extends AuditEntity {
+
+                @ManyToOne(fetch = FetchType.LAZY)
+                @JoinColumn(name = "big_project_id")
+                private BigProject bigProject;
+，repo中
+   @EntityGraph(value = "Project.basicWithMember", type = EntityGraph.EntityGraphType.LOAD)
+   Project findProjectWithMembersById(Long id);
