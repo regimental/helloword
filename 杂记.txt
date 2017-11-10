@@ -38,3 +38,11 @@
 4===========================================================================
 idea 快捷键，查看某个接口的具体实现  ctrl+h
             查看某个方法的参数：  ctrl+q
+5===============================================================
+查看因为外键原因导致的删除失败
+select a.constraint_name, a.table_name, b.constraint_name
+  from user_constraints a, user_constraints b
+ where a.constraint_type = 'R'
+   and b.constraint_type = 'P'
+   and a.r_constraint_name = b.constraint_name
+   and a.constraint_name = 'FKNN0P9JCKU34C0DBL4VYWL9SML'
