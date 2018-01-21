@@ -62,7 +62,11 @@
     3, ifconfig eth0 192.168.1.1  这个方法可以临时修改ip，重启后恢复
     4，进入/etc/sysconfig/network-scripts/ipcfg-eth0 ,修改此文件上面的1和2本质也是修改它，修改后执行2重启生效
     
-    
+  七：tcp、ip 设置
+  八：rpm包管理
+  九：crontab 任务调度命令：执行系统命令，如果病毒扫描，执行个人任务，如数据库的备份。
+             crontab -e
+             
     
     
     
