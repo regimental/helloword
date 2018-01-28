@@ -94,9 +94,30 @@ KiB Swap:  2097148 total,  2097148 free,        0 used（虚拟内存使用情�
         
   十三： 查看网络命令
          显示网络信息的netstat -an ,后面可以添加 more
+         netstat -anp | more 显示端口的进程和ip，可以使用kill -9 杀死某些陌生进程
+         追踪路由的工具 traceroute www.baidu.com
+         route 此命令可以直接使用，查看本机的路由情况
          
+   十四：mysql的安装
+        1，将安装文件拷贝到虚拟机中
+        2，把安装文件解压进入文件夹   tar -zxvf 文件名.tar.gz
+        3，修改解压后的文件夹名称为mysql  mv 原名称  新名称
+        4，切换到home下，root用户   groupadd mysql 添加mysql用户组，方便以后管理
+                                  useradd -g mysql mysql (创建一个mysql的用户，并添加到组中)
+                           进入修改后的mysql文件夹，初始化数据库，创建用户
+                           scripts/mysql_install_db/ --user=mysql
+                      依然在进入后的mysql文件夹中  chown -R root . （修改当前文件夹.及文件及子文件夹的所有者为root）
+                                  chown -R mysql data (将data文件夹修改所有者为mysql用户)
+                                  chgrp -R mysql . (改变组，将当前文件夹及子文件夹的所有组改成mysql组)
+                                  启动mysql  ： bin/mysqld_safe --user=mysql &(表示已后台方式启动)
+                                  
+              启动报错：
+              [root@localhost mysql]# bin/mysqld_safe --user=mysal $
+             180128 13:24:10 mysqld_safe error: log-error set to '/var/log/mariadb/mariadb.log', however file don't exists. Create writable for user 'mysal'.
+
+              
          
-  
+   
     
     
     
