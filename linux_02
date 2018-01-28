@@ -75,7 +75,28 @@
        crontal -r 删除所有命令
        crontab -l 列出已有的命令
        
-    
+  十，查看进程命令  
+          ps -  aux 
+          ps -ef | grep java
+          kill -9 端口号
+          
+  十一：top命令
+        top - 11:00:40 up 21 min（系统运行时间）,  2 users（共多少个用户）,  load average: 0.00, 0.03, 0.07（数字和相加除以3如果大于0.6，负载均衡有问题）
+Tasks: 307 total,   3 running, 304 sleeping,   0 stopped,   0 zombie
+%Cpu(s):  0.2 us,  0.0 sy,  0.0 ni, 99.8 id（cup空闲率）,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+KiB Mem :  1876632 total,   154772 free,   536336 used,  1185524 buff/cache
+KiB Swap:  2097148 total,  2097148 free,        0 used（虚拟内存使用情况）.  1151108 avail Mem 
+  按q退出top命令  top -d 10 (10秒刷新一下)
+  
+  十二： date 查看系统时间
+        设置系统时间 date MMDDHHMMCCYY.SS  月月日日时时分分年年年年。秒秒
+        查看月历 cal 1 2018
+        
+  十三： 查看网络命令
+         显示网络信息的netstat -an ,后面可以添加 more
+         
+         
+  
     
     
     
