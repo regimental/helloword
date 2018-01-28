@@ -115,7 +115,9 @@ KiB Swap:  2097148 total,  2097148 free,        0 used（虚拟内存使用情�
               [root@localhost mysql]# bin/mysqld_safe --user=mysal $
              180128 13:24:10 mysqld_safe error: log-error set to '/var/log/mariadb/mariadb.log', however file don't exists. Create writable for user 'mysal'.
 
-              
+          5，数据库的备份和恢复
+             mysqldump -u root -p 密码 数据库名 > data.bak
+             恢复：mysql -u root -p 密码 数据库名 < data.bak
          
    
     
