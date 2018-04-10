@@ -1,0 +1,13 @@
+git add .  添加当前目录下所有文件
+git add test.txt 添加指定文件
+git commit -m ‘xxx’ 提交
+
+git status 查看git工作区中文件的状态
+git reflog 查看所有工作区变化日志
+git log --pretty=oneline 查看格式化提交日志
+
+git reset --hard HEAD^恢复上一版本
+git reset --hard HEAD~100恢复到第100版本
+git reset --hard e2233kki3恢复到指定版本通常和git reflog配合使用
+
+git checkout --xxx文件 ，放弃本次修改，重新检出覆盖修改
