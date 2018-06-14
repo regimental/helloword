@@ -1,0 +1,37 @@
+private static int[] insertSort2(int[] arr) {
+        int out,in =1;
+        for(out=1;out<arr.length;out++){
+            int temp = arr[out];
+            in = out;
+            while (in>0 && arr[in-1] >= temp){
+                arr[in] =arr[in-1];
+                in--;
+            }
+            arr[in] = temp;
+        }
+        return arr;
+    }
+    
+    
+    
+    优先队列
+     public void insert(Person o){
+            // 待插入的位置
+            int j;
+            if(nElems ==0){
+                arr[nElems++] = o;
+            }else{
+                if(!isFull()){
+                    for(j=nElems-1;j>=0;j--){
+                        if(o.getAge()>arr[j].getAge()){
+                            arr[j+1]= arr[j];
+                        }else{
+                           break;
+                        }
+                    }
+                    arr[j+1] =o;
+                    nElems++;
+                }
+
+            }
+        }
