@@ -1,0 +1,91 @@
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+
+/**
+ * @Date: 2019/4/18 16:28
+ * @Description:
+ */
+public class FileTest1 {
+    static final String oripath ="E:\\BaiduNetdiskDownload\\bilbil";
+    static int i=0;
+    static List<File> listFiles = new ArrayList<>();
+    public static void main(String[] args) {
+        String path = oripath+"\\46708112";
+        File file = new File(path);
+        File[] files = file.listFiles();
+        Arrays.sort(files,new CompratorByLastModified());
+        for(File child : files){
+            listFiles.add(child);
+        }
+        for(File fd : listFiles){
+            doListFile(fd.getAbsolutePath());
+        }
+
+    }
+
+    private static void doListFile(String path) {
+        File file = new File(path);
+        File[] files = file.listFiles();
+        for(File child : files){
+            String fileName = child.getName();
+            if(child.isDirectory()){
+                doListFile(child.getAbsolutePath());
+            }else if(fileName.endsWith(".blv")){
+                i++;
+                String abpath = child.getAbsolutePath();
+                System.out.println(abpath+"|"+fileName);
+                try {
+                    copyFile(abpath,fileName.replaceFirst("0",i+""));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }else{
+                continue;
+            }
+        }
+    }
+
+    private static void copyFile(String abpath, String newName) throws Exception {
+        File copyFile = new File(abpath);
+        File orgFile = new File(oripath+"\\mycopy");
+        if(!orgFile.exists()){
+            orgFile.mkdirs();
+        }
+        InputStream input = null;
+        OutputStream output = null;
+        try {
+            input = new FileInputStream(copyFile);
+            output = new FileOutputStream(new File(orgFile,newName));
+            byte[] buf = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = input.read(buf)) > 0) {
+                output.write(buf, 0, bytesRead);
+            }
+        } finally {
+            input.close();
+            output.close();
+        }
+
+    }
+
+
+    static class CompratorByLastModified implements Comparator<File> {
+        public int compare(File f1, File f2) {
+            long diff = f1.lastModified() - f2.lastModified();
+            if (diff > 0)
+                return 1;//倒序正序控制
+            else if (diff == 0)
+                return 0;
+            else
+                return -1;//倒序正序控制
+        }
+        public boolean equals(Object obj) {
+            return true;
+        }
+    }
+
+}
