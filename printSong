@@ -1,0 +1,94 @@
+
+
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+/**
+ * @Date: 2019/4/19 09:58
+ * @Description:  根据给定的一段歌词，停顿连续输出
+ *
+ */
+class Song{
+    private String str = null;
+    private int totalLength = 0;
+    private int currentLenght =0;
+    private Lock lock = new ReentrantLock();
+    private Condition condition = lock.newCondition();
+    private char[] strs ;
+    private volatile boolean flag = true;
+    public  Song (String str){
+        this.str = str;
+        this.strs = this.str.toCharArray();
+        this.totalLength = this.strs.length;
+    }
+
+    private void readJ(){
+               try {
+                   lock.lock();
+                   Thread.sleep( 100 );
+                   while(currentLenght >= totalLength-1){
+                       flag = false;
+                       Thread.currentThread().interrupt();
+                       Thread.sleep(3000);
+                   }
+                   while (currentLenght%2!=0){
+                       condition.await();
+                   }
+                   System.out.print(strs[currentLenght]);
+                   currentLenght++;
+                   condition.signalAll();
+               } catch (Exception e) {
+                   //e.printStackTrace();
+               } finally {
+                   lock.unlock();
+               }
+    }
+
+
+    private void readO(){
+        try {
+            lock.lock();
+            Thread.sleep( 100 );
+            while (currentLenght >= totalLength-1){
+                flag = false;
+                Thread.currentThread().interrupt();
+                Thread.sleep(3000);
+            }
+            while (currentLenght%2==0){
+                condition.await();
+            }
+            System.out.print(strs[currentLenght]);
+            currentLenght++;
+            condition.signalAll();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            lock.unlock();
+        }
+    }
+
+  public void startRead(){
+        new Thread((Runnable)()->{
+            while (flag){
+               readJ();
+            }
+        }).start();
+
+      new Thread((Runnable)()->{
+          while (flag){
+              readO();
+          }
+      }).start();
+  }
+
+}
+
+
+public class ProduceConsLock2 {
+    public static void main(String[] args) {
+        String str = "这人间袅袅炊烟和风华雪月浪漫";
+        Song s = new Song(str);
+        s.startRead();
+    }
+}
